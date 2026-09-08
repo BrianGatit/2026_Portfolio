@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" rx="6" fill="#0a0a0b" />
+  <!-- the plot: data rising through the mark -->
+  <path
+    d="M12 46 C21 46 22 30 32 30 C42 30 43 18 52 18"
+    fill="none"
+    stroke="#ff5a2e"
+    stroke-width="4.5"
+    stroke-linecap="round"
+  />
+  <!-- baseline + the point it lands on -->
+  <path d="M12 52h40" stroke="#f4f2ec" stroke-opacity="0.35" stroke-width="2.5" stroke-linecap="round" />
+  <circle cx="52" cy="18" r="5" fill="#ff5a2e" stroke="#0a0a0b" stroke-width="2.5" />
+</svg>

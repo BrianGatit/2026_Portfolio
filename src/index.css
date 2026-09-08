@@ -1,0 +1,388 @@
+@import 'tailwindcss';
+
+/* Class-based dark mode driven by <html class="dark"> */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ------------------------------------------------------------------ *\
+   PALETTE
+   Two selected modes — the dark column is stepped for the dark
+   surface, not an automatic inversion of the light one.
+   Accent has a per-mode step so it clears AA as text in both modes
+   (light 4.69:1 on paper · dark 6.36:1 on ink).
+   Series 1–4 are the validated categorical slots, in fixed order.
+\* ------------------------------------------------------------------ */
+:root {
+  --page: #f4f2ec;
+  --page-deep: #eae7df;
+  --surface: #fbfaf7;
+  --surface-2: #f0ede5;
+  --ink: #111113;
+  --ink-secondary: #45433e;
+  --ink-muted: #6b6862;
+  --ink-faint: #a8a49b;
+  --line: rgb(17 17 19 / 0.11);
+  --line-strong: rgb(17 17 19 / 0.22);
+  --accent: #c9350f;
+  --accent-hover: #b8300d;
+  --accent-wash: rgb(201 53 15 / 0.08);
+  --on-accent: #fdf6f3;
+
+  /* chart chrome */
+  --grid: #e1e0d9;
+  --axis: #c3c2b7;
+
+  /* categorical slots (light steps) */
+  --series-1: #2a78d6;
+  --series-2: #eb6834;
+  --series-3: #1baf7a;
+  --series-4: #eda100;
+
+  --grain-opacity: 0.035;
+  color-scheme: light;
+}
+
+.dark {
+  --page: #0a0a0b;
+  --page-deep: #060607;
+  --surface: #131315;
+  --surface-2: #1b1b1e;
+  --ink: #f4f2ec;
+  --ink-secondary: #c8c4ba;
+  --ink-muted: #9a968d;
+  --ink-faint: #6a675f;
+  --line: rgb(244 242 236 / 0.13);
+  --line-strong: rgb(244 242 236 / 0.26);
+  --accent: #ff5a2e;
+  --accent-hover: #ff6b41;
+  --accent-wash: rgb(255 90 46 / 0.12);
+  --on-accent: #170703;
+
+  --grid: #2c2c2a;
+  --axis: #383835;
+
+  /* categorical slots (dark steps) */
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --series-3: #199e70;
+  --series-4: #c98500;
+
+  --grain-opacity: 0.05;
+  color-scheme: dark;
+}
+
+@theme inline {
+  /* colors */
+  --color-page: var(--page);
+  --color-page-deep: var(--page-deep);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-ink-secondary: var(--ink-secondary);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-faint: var(--ink-faint);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-wash: var(--accent-wash);
+  --color-on-accent: var(--on-accent);
+  --color-grid: var(--grid);
+  --color-axis: var(--axis);
+  --color-series-1: var(--series-1);
+  --color-series-2: var(--series-2);
+  --color-series-3: var(--series-3);
+  --color-series-4: var(--series-4);
+
+  /* type families */
+  --font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-serif: 'Instrument Serif', 'Iowan Old Style', Georgia, serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* Fluid editorial scale.
+     The upper bounds are set so the longest line in each role still fits its
+     column at 1440px — display type that overflows its measure is the fastest
+     way to make a portfolio look untested. */
+  --text-mega: clamp(2.1rem, 8.8vw, 8.75rem);
+  --text-mega--line-height: 0.86;
+  --text-mega--letter-spacing: -0.042em;
+  --text-mega--font-weight: 500;
+
+  --text-display: clamp(2.3rem, 6.6vw, 6rem);
+  --text-display--line-height: 0.92;
+  --text-display--letter-spacing: -0.04em;
+  --text-display--font-weight: 500;
+
+  --text-title: clamp(2rem, 4.4vw, 3.5rem);
+  --text-title--line-height: 0.98;
+  --text-title--letter-spacing: -0.032em;
+  --text-title--font-weight: 500;
+
+  --text-heading: clamp(1.5rem, 2.4vw, 2.125rem);
+  --text-heading--line-height: 1.08;
+  --text-heading--letter-spacing: -0.024em;
+  --text-heading--font-weight: 500;
+
+  --text-subhead: clamp(1.15rem, 1.5vw, 1.4rem);
+  --text-subhead--line-height: 1.3;
+  --text-subhead--letter-spacing: -0.014em;
+
+  --text-lead: clamp(1.05rem, 1.35vw, 1.3125rem);
+  --text-lead--line-height: 1.55;
+  --text-lead--letter-spacing: -0.011em;
+
+  --text-body: 1rem;
+  --text-body--line-height: 1.7;
+
+  --text-micro: 0.6875rem;
+  --text-micro--line-height: 1.1;
+  --text-micro--letter-spacing: 0.2em;
+
+  /* motion */
+  --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-swift: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* radii — mostly square; a whisper of softness on media */
+  --radius-card: 2px;
+  --radius-media: 3px;
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    border-color: var(--line);
+  }
+
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: var(--page);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.7;
+    font-feature-settings: 'ss01' on, 'cv05' on;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background-color: var(--accent);
+    color: var(--on-accent);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 1px;
+  }
+
+  /* Keep the caret/scrollbar in the same material as the page */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--page);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--line-strong);
+    border: 3px solid var(--page);
+    border-radius: 99px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--ink-faint);
+  }
+
+  img,
+  svg,
+  video {
+    display: block;
+    max-width: 100%;
+  }
+
+  /* Motion is a layer of the design, not a requirement of it. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto !important;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* ---- layout rails ---------------------------------------------- */
+  .u-shell {
+    width: 100%;
+    margin-inline: auto;
+    max-width: 1560px;
+    padding-inline: 1.5rem;
+  }
+  @media (min-width: 768px) {
+    .u-shell {
+      padding-inline: 2.5rem;
+    }
+  }
+  @media (min-width: 1280px) {
+    .u-shell {
+      padding-inline: 4rem;
+    }
+  }
+
+  .u-measure {
+    max-width: 34rem;
+  }
+  .u-measure-wide {
+    max-width: 46rem;
+  }
+
+  /* ---- editorial micro-label ------------------------------------- */
+  .u-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    line-height: 1;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  /* ---- the accent underline that grows on hover ------------------ */
+  .u-link {
+    position: relative;
+    display: inline-block;
+    color: inherit;
+    text-decoration: none;
+  }
+  .u-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    height: 1px;
+    width: 100%;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s var(--ease-editorial);
+  }
+  .u-link:hover::after,
+  .u-link:focus-visible::after {
+    transform: scaleX(1);
+  }
+
+  /* ---- printed-paper grain --------------------------------------- */
+  .u-grain {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    opacity: var(--grain-opacity);
+    mix-blend-mode: hard-light;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---- text-clip reveal masks ------------------------------------ */
+  .u-clip {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.08em;
+    margin-bottom: -0.08em;
+  }
+
+  /* ---- marquee --------------------------------------------------- */
+  .u-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: u-marquee var(--marquee-duration, 40s) linear infinite;
+  }
+  .u-marquee:hover .u-marquee-track {
+    animation-play-state: paused;
+  }
+  @keyframes u-marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* ---- ambient hero motion --------------------------------------- */
+  @keyframes u-drift {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+    50% {
+      transform: translate3d(0, -12px, 0);
+    }
+  }
+  @keyframes u-blink {
+    0%,
+    45% {
+      opacity: 1;
+    }
+    50%,
+    95% {
+      opacity: 0.15;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  /* ---- skip link -------------------------------------------------- */
+  .u-skip {
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+    z-index: 100;
+    transform: translateY(-200%);
+    transition: transform 0.25s var(--ease-swift);
+    background: var(--ink);
+    color: var(--page);
+    padding: 0.65rem 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .u-skip:focus-visible {
+    transform: translateY(0);
+  }
+
+  /* ---- numeric styling ------------------------------------------- */
+  .u-tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@layer utilities {
+  .u-no-scroll {
+    overflow: hidden;
+  }
+}

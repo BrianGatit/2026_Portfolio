@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Brian Mungai — Software Engineer, Data Scientist & Creative Designer</title>
+    <meta
+      name="description"
+      content="Brian Mungai is a multidisciplinary technologist building digital products, intelligent systems, data-driven experiences and visual identities — at the intersection of software engineering, data science and design."
+    />
+    <meta name="author" content="Brian Mungai" />
+    <link rel="canonical" href="https://brianmungai.com/" />
+
+    <!-- Icons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <meta name="theme-color" content="#f4f2ec" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a0a0b" media="(prefers-color-scheme: dark)" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Brian Mungai" />
+    <meta property="og:title" content="Brian Mungai — Software Engineer, Data Scientist & Creative Designer" />
+    <meta
+      property="og:description"
+      content="I design the identity, engineer the product, model the data and build the intelligent systems around it."
+    />
+    <meta property="og:url" content="https://brianmungai.com/" />
+    <meta property="og:image" content="/og-image.svg" />
+    <meta property="og:image:alt" content="Brian Mungai — Software Engineer, Data Scientist and Creative Designer" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Brian Mungai — Software Engineer, Data Scientist & Creative Designer" />
+    <meta
+      name="twitter:description"
+      content="I design the identity, engineer the product, model the data and build the intelligent systems around it."
+    />
+    <meta name="twitter:image" content="/og-image.svg" />
+
+    <!-- Fonts: display / body / editorial serif / mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap"
+    />
+
+    <script>
+      // Set the theme before first paint so there is no flash of the wrong palette.
+      (function () {
+        try {
+          var stored = localStorage.getItem('bm-theme')
+          var dark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches
+          document.documentElement.classList.toggle('dark', dark)
+          document.documentElement.style.colorScheme = dark ? 'dark' : 'light'
+        } catch (e) {}
+      })()
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Brian Mungai",
+        "url": "https://brianmungai.com/",
+        "jobTitle": "Software Engineer, Data Scientist & Creative Designer",
+        "knowsAbout": [
+          "Software Engineering",
+          "Machine Learning",
+          "Data Science",
+          "Artificial Intelligence",
+          "Visual Design",
+          "Brand Identity"
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <div style="font-family: system-ui, sans-serif; padding: 3rem; max-width: 40rem">
+        <h1>Brian Mungai</h1>
+        <p>Software Engineer, Data Scientist &amp; Creative Designer.</p>
+        <p>This portfolio needs JavaScript enabled. You can reach me at mungaibrian011@gmail.com.</p>
+      </div>
+    </noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

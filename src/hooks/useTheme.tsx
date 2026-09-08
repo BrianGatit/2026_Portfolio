@@ -1,0 +1,88 @@
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
+
+type Theme = 'light' | 'dark'
+
+const STORAGE_KEY = 'bm-theme'
+
+interface ThemeContextValue {
+  theme: Theme
+  isDark: boolean
+  toggle: () => void
+  setTheme: (theme: Theme) => void
+}
+
+const ThemeContext = createContext<ThemeContextValue | null>(null)
+
+function readInitialTheme(): Theme {
+  if (typeof window === 'undefined') return 'light'
+  try {
+    const stored = window.localStorage.getItem(STORAGE_KEY)
+    if (stored === 'light' || stored === 'dark') return stored
+  } catch {
+    /* private mode — fall through to the OS preference */
+  }
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+}
+
+function applyTheme(theme: Theme) {
+  const root = document.documentElement
+  root.classList.toggle('dark', theme === 'dark')
+  root.style.colorScheme = theme
+}
+
+export function ThemeProvider({ children }: { children: ReactNode }) {
+  const [theme, setThemeState] = useState<Theme>(readInitialTheme)
+
+  useEffect(() => {
+    applyTheme(theme)
+  }, [theme])
+
+  // Follow the OS only while the visitor has not made an explicit choice.
+  useEffect(() => {
+    const query = window.matchMedia('(prefers-color-scheme: dark)')
+    const onChange = (event: MediaQueryListEvent) => {
+      try {
+        if (window.localStorage.getItem(STORAGE_KEY)) return
+      } catch {
+        /* ignore */
+      }
+      setThemeState(event.matches ? 'dark' : 'light')
+    }
+    query.addEventListener('change', onChange)
+    return () => query.removeEventListener('change', onChange)
+  }, [])
+
+  const setTheme = useCallback((next: Theme) => {
+    setThemeState(next)
+    try {
+      window.localStorage.setItem(STORAGE_KEY, next)
+    } catch {
+      /* ignore */
+    }
+  }, [])
+
+  const toggle = useCallback(() => {
+    setThemeState((current) => {
+      const next = current === 'dark' ? 'light' : 'dark'
+      try {
+        window.localStorage.setItem(STORAGE_KEY, next)
+      } catch {
+        /* ignore */
+      }
+      return next
+    })
+  }, [])
+
+  const value = useMemo<ThemeContextValue>(
+    () => ({ theme, isDark: theme === 'dark', toggle, setTheme }),
+    [theme, toggle, setTheme],
+  )
+
+  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
+}
+
+export function useTheme() {
+  const context = useContext(ThemeContext)
+  if (!context) throw new Error('useTheme must be used inside <ThemeProvider>')
+  return context
+}

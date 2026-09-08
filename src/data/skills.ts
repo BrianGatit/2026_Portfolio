@@ -1,0 +1,145 @@
+import type { SkillCategory } from '@/types'
+
+/**
+ * Grouped by what the tool is *for*, not by logo — a wall of icons tells a
+ * visitor nothing about depth.
+ */
+export const skillCategories: SkillCategory[] = [
+  {
+    id: 'foundations',
+    title: 'Foundations',
+    blurb: 'The layer everything else is built on. Semantics, accessibility and the box model, taken seriously.',
+    items: [
+      { name: 'HTML', level: 'core' },
+      { name: 'CSS', level: 'core' },
+      { name: 'JavaScript', level: 'core' },
+      { name: 'TypeScript', level: 'core' },
+      { name: 'Accessibility / WCAG', level: 'strong' },
+      { name: 'Web performance', level: 'strong' },
+    ],
+  },
+  {
+    id: 'interface',
+    title: 'Interface engineering',
+    blurb: 'Typed component systems, state that stays predictable, and motion used as a tool rather than decoration.',
+    items: [
+      { name: 'React', level: 'core' },
+      { name: 'Vite', level: 'core' },
+      { name: 'Tailwind CSS', level: 'core' },
+      { name: 'Framer Motion', level: 'strong' },
+      { name: 'React Router', level: 'strong' },
+      { name: 'Next.js', level: 'strong' },
+      { name: 'Design systems', level: 'strong' },
+      { name: 'Storybook', level: 'working' },
+    ],
+  },
+  {
+    id: 'backend',
+    title: 'Backend & APIs',
+    blurb: 'Services with clear boundaries: modelled data, versioned contracts, real authentication, sane background work.',
+    items: [
+      { name: 'Python', level: 'core' },
+      { name: 'Django / DRF', level: 'core' },
+      { name: 'FastAPI', level: 'core' },
+      { name: 'Node.js', level: 'strong' },
+      { name: 'REST & OpenAPI', level: 'strong' },
+      { name: 'Celery / queues', level: 'strong' },
+      { name: 'WebSockets', level: 'working' },
+      { name: 'GraphQL', level: 'working' },
+    ],
+  },
+  {
+    id: 'data-stores',
+    title: 'Data & storage',
+    blurb: 'Schema first. Indexes on purpose. Migrations that can be rolled back on a Friday.',
+    items: [
+      { name: 'SQL', level: 'core' },
+      { name: 'PostgreSQL', level: 'core' },
+      { name: 'SQLite', level: 'strong' },
+      { name: 'Redis', level: 'strong' },
+      { name: 'MongoDB', level: 'working' },
+      { name: 'dbt', level: 'working' },
+    ],
+  },
+  {
+    id: 'science',
+    title: 'Data science',
+    blurb: 'The analytical middle of my practice — from framing the question to defending the estimate.',
+    items: [
+      { name: 'Pandas', level: 'core' },
+      { name: 'NumPy', level: 'core' },
+      { name: 'Scikit-learn', level: 'core' },
+      { name: 'Matplotlib', level: 'core' },
+      { name: 'Seaborn', level: 'strong' },
+      { name: 'Statsmodels', level: 'strong' },
+      { name: 'Jupyter', level: 'core' },
+      { name: 'Power BI', level: 'strong' },
+      { name: 'Statistics & inference', level: 'strong' },
+    ],
+  },
+  {
+    id: 'ml',
+    title: 'Machine learning & AI',
+    blurb: 'Predictive modelling, clustering and language systems — with evaluation that survives scrutiny.',
+    items: [
+      { name: 'Regression & trees', level: 'core' },
+      { name: 'XGBoost / LightGBM', level: 'strong' },
+      { name: 'Clustering', level: 'strong' },
+      { name: 'PyTorch', level: 'working' },
+      { name: 'Transformers', level: 'strong' },
+      { name: 'RAG & embeddings', level: 'strong' },
+      { name: 'MLflow', level: 'working' },
+      { name: 'Model evaluation', level: 'strong' },
+    ],
+  },
+  {
+    id: 'platform',
+    title: 'Platform & cloud',
+    blurb: 'Reproducible environments, boring deployments, and enough observability to sleep through a launch.',
+    items: [
+      { name: 'Git', level: 'core' },
+      { name: 'Docker', level: 'strong' },
+      { name: 'GitHub Actions', level: 'strong' },
+      { name: 'AWS (S3, EC2, Lambda)', level: 'strong' },
+      { name: 'Vercel', level: 'strong' },
+      { name: 'Railway / Render', level: 'strong' },
+      { name: 'Nginx', level: 'working' },
+      { name: 'Terraform', level: 'working' },
+    ],
+  },
+  {
+    id: 'craft',
+    title: 'Design & art direction',
+    blurb: 'The half of my work that has nothing to do with a terminal — and makes the other half legible.',
+    items: [
+      { name: 'Figma', level: 'core' },
+      { name: 'Typography', level: 'core' },
+      { name: 'Brand identity', level: 'strong' },
+      { name: 'Illustrator', level: 'strong' },
+      { name: 'Photoshop', level: 'strong' },
+      { name: 'InDesign', level: 'strong' },
+      { name: 'Layout & grid systems', level: 'core' },
+      { name: 'Data visualisation', level: 'strong' },
+    ],
+  },
+]
+
+/** Compact tool list used in the marquee on the home page. */
+export const toolMarquee = [
+  'TypeScript',
+  'React',
+  'Vite',
+  'Tailwind CSS',
+  'Python',
+  'Django',
+  'FastAPI',
+  'Node.js',
+  'PostgreSQL',
+  'Pandas',
+  'Scikit-learn',
+  'PyTorch',
+  'Power BI',
+  'Docker',
+  'AWS',
+  'Figma',
+]

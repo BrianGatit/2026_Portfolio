@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#0a0a0b" />
+
+  <!-- exposed grid -->
+  <g stroke="#f4f2ec" stroke-opacity="0.08">
+    <path d="M150 0V630M300 0V630M450 0V630M600 0V630M750 0V630M900 0V630M1050 0V630" />
+    <path d="M0 80H1200M0 550H1200" />
+  </g>
+
+  <!-- accent block -->
+  <rect x="1010" y="80" width="110" height="110" fill="#ff5a2e" />
+
+  <!-- the plot -->
+  <path
+    d="M80 470 C200 470 240 400 340 396 C440 392 470 330 560 322"
+    fill="none"
+    stroke="#ff5a2e"
+    stroke-width="4"
+    stroke-linecap="round"
+  />
+  <circle cx="560" cy="322" r="9" fill="#ff5a2e" stroke="#0a0a0b" stroke-width="4" />
+
+  <!-- name -->
+  <text
+    x="80"
+    y="250"
+    font-family="'Space Grotesk', 'Helvetica Neue', Arial, sans-serif"
+    font-size="112"
+    font-weight="500"
+    letter-spacing="-5"
+    fill="#f4f2ec"
+  >
+    Brian Mungai
+  </text>
+
+  <!-- role -->
+  <text
+    x="80"
+    y="316"
+    font-family="'Space Grotesk', 'Helvetica Neue', Arial, sans-serif"
+    font-size="40"
+    font-weight="400"
+    letter-spacing="-1"
+    fill="#9a968d"
+  >
+    Software Engineer, Data Scientist &amp; Creative Designer
+  </text>
+
+  <!-- footer labels -->
+  <g
+    font-family="'JetBrains Mono', 'Courier New', monospace"
+    font-size="20"
+    letter-spacing="4"
+    fill="#9a968d"
+  >
+    <text x="80" y="50">BRIANMUNGAI.COM</text>
+    <text x="80" y="590">01 ENGINEERING</text>
+    <text x="450" y="590">02 DATA &amp; AI</text>
+    <text x="820" y="590">03 DESIGN</text>
+  </g>
+</svg>
