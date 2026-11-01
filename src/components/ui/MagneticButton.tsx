@@ -2,6 +2,7 @@ import { useRef, type MouseEvent, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, useMotionValue, useReducedMotion, useSpring } from 'motion/react'
 import { cn } from '@/utils/cn'
+import { easeSwift } from '@/utils/motion'
 import { useIsTouch } from '@/hooks/useUi'
 import { ArrowUpRight } from './Icons'
 
@@ -124,6 +125,9 @@ export function MagneticButton({
       onMouseMove={handleMove}
       onMouseLeave={handleLeave}
       style={magnetic ? { x, y } : undefined}
+      // A small press, so a tap or click registers before the route changes.
+      whileTap={{ scale: 0.97 }}
+      transition={{ duration: 0.18, ease: easeSwift }}
       className="inline-block will-change-transform"
     >
       {to ? (

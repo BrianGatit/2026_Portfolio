@@ -70,8 +70,8 @@ export function ProjectMedia({ project, className, priority = false }: ProjectMe
 }
 
 /**
- * A captioned placeholder used inside case studies where a real screenshot
- * will go. It is honest about being a placeholder rather than pretending.
+ * A captioned case-study figure: the real image when one is supplied, and
+ * otherwise a placeholder that is honest about being one rather than pretending.
  */
 export function FigurePlaceholder({
   caption,
@@ -79,17 +79,31 @@ export function FigurePlaceholder({
   discipline,
   ratio = '16 / 10',
   index,
+  image,
+  alt,
 }: {
   caption: string
   seed: string
   discipline: Project['discipline']
   ratio?: string
   index?: number
+  image?: string
+  alt?: string
 }) {
   return (
     <figure className="flex flex-col gap-3">
       <MediaFrame ratio={ratio}>
-        <ProjectVisual seed={`${seed}-${index ?? 0}`} discipline={discipline} title={caption} />
+        {image ? (
+          <img
+            src={image}
+            alt={alt ?? caption}
+            loading="lazy"
+            decoding="async"
+            className="absolute inset-0 size-full object-cover"
+          />
+        ) : (
+          <ProjectVisual seed={`${seed}-${index ?? 0}`} discipline={discipline} title={caption} />
+        )}
       </MediaFrame>
       <figcaption className="flex gap-3 font-mono text-[0.68rem] leading-relaxed tracking-[0.04em] text-ink-muted">
         {index !== undefined && <span className="text-ink-faint">{`Fig. ${index + 1}`}</span>}

@@ -60,7 +60,6 @@ export default function ArticleDetail() {
               as="h1"
               text={article.title}
               immediate
-              by="word"
               className="mt-7 max-w-[26ch] font-display text-display font-medium text-ink"
             />
 

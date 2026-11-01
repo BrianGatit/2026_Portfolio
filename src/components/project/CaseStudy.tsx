@@ -390,6 +390,8 @@ export function CaseStudy({ project }: { project: Project }) {
                     discipline={project.discipline}
                     ratio={item.ratio}
                     index={index}
+                    image={item.image}
+                    alt={item.alt}
                   />
                 </Reveal>
               ))}

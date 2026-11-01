@@ -3,9 +3,25 @@ import { AnimatePresence, motion } from 'motion/react'
 import type { DesignPiece } from '@/types'
 import { cn } from '@/utils/cn'
 import { DesignVisual } from '@/components/visual/DesignVisual'
+import { AngleReveal } from '@/components/ui/AngleReveal'
 import { Close } from '@/components/ui/Icons'
 import { useEscapeKey, useLockScroll } from '@/hooks/useUi'
 import { easeEditorial } from '@/utils/motion'
+
+/**
+ * Entrance delay for a gallery cell: a short left-to-right cascade across the
+ * three columns, capped so a long list never makes anyone wait.
+ */
+function cascade(index: number, total: number) {
+  return total > 1 ? Math.min(index, 5) * 0.06 : 0
+}
+
+/** Previous/next in the larger view crossfade rather than snap. */
+const swap = {
+  initial: { opacity: 0, y: 8 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.32, ease: easeEditorial } },
+  exit: { opacity: 0, y: -6, transition: { duration: 0.16 } },
+}
 
 /**
  * Masonry gallery for graphic work.
@@ -31,14 +47,19 @@ export function DesignGallery({ pieces, className }: { pieces: DesignPiece[]; cl
 
   return (
     <>
-      <div className={cn('columns-1 gap-8 sm:columns-2 lg:columns-3 lg:gap-10', className)}>
+      {/* Keyed on the visible set, so a filter change replays the cascade
+          instead of leaving survivors still and newcomers popping in. */}
+      <div
+        key={pieces.map((piece) => piece.slug).join()}
+        className={cn('columns-1 gap-8 sm:columns-2 lg:columns-3 lg:gap-10', className)}
+      >
         {pieces.map((piece, index) => (
           <motion.figure
             key={piece.slug}
             initial={{ opacity: 0, y: 22 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.15 }}
-            transition={{ duration: 0.7, ease: easeEditorial }}
+            transition={{ duration: 0.7, ease: easeEditorial, delay: cascade(index, pieces.length) }}
             className="group mb-8 break-inside-avoid lg:mb-10"
           >
             {/* Only the media is the button — a figcaption is not valid inside
@@ -54,19 +75,22 @@ export function DesignGallery({ pieces, className }: { pieces: DesignPiece[]; cl
                 style={{ aspectRatio: piece.ratio }}
                 data-cursor="View piece"
               >
-                <div className="absolute inset-0 transition-transform duration-[1100ms] ease-[var(--ease-editorial)] group-hover:scale-[1.04]">
-                  {piece.image ? (
-                    <img
-                      src={piece.image}
-                      alt={piece.alt ?? `${piece.title} — ${piece.category}`}
-                      loading="lazy"
-                      decoding="async"
-                      className="absolute inset-0 size-full object-cover"
-                    />
-                  ) : (
-                    <DesignVisual piece={piece} />
-                  )}
-                </div>
+                {/* The cells have no fill of their own, so the cover is the page colour. */}
+                <AngleReveal delay={cascade(index, pieces.length) + 0.1} cover="var(--page)">
+                  <div className="absolute inset-0 transition-transform duration-[1100ms] ease-[var(--ease-editorial)] group-hover:scale-[1.04]">
+                    {piece.image ? (
+                      <img
+                        src={piece.image}
+                        alt={piece.alt ?? `${piece.title} — ${piece.category}`}
+                        loading="lazy"
+                        decoding="async"
+                        className="absolute inset-0 size-full object-cover"
+                      />
+                    ) : (
+                      <DesignVisual piece={piece} />
+                    )}
+                  </div>
+                </AngleReveal>
 
               </div>
             </button>
@@ -85,9 +109,11 @@ export function DesignGallery({ pieces, className }: { pieces: DesignPiece[]; cl
               {/* Tools stay visible rather than hiding behind hover — there is
                   no hover on a touch device, and the toolchain is part of the
                   credit, not a reward for pointing at the image. */}
-              <p className="mt-3 border-t border-line pt-3 font-mono text-[0.63rem] leading-relaxed tracking-[0.08em] text-ink-muted uppercase">
-                {piece.tools.join(' · ')}
-              </p>
+              {piece.tools.length > 0 && (
+                <p className="mt-3 border-t border-line pt-3 font-mono text-[0.63rem] leading-relaxed tracking-[0.08em] text-ink-muted uppercase">
+                  {piece.tools.join(' · ')}
+                </p>
+              )}
             </figcaption>
           </motion.figure>
         ))}
@@ -117,40 +143,50 @@ export function DesignGallery({ pieces, className }: { pieces: DesignPiece[]; cl
             >
               {/* Width-driven on small screens, height-driven from `lg` up, so a
                   tall poster fits the viewport instead of forcing a scroll. */}
-              <div
-                className="relative w-full shrink-0 overflow-hidden border border-line lg:h-[80vh] lg:w-auto"
-                style={{ aspectRatio: active.ratio }}
-              >
-                {active.image ? (
-                  <img
-                    src={active.image}
-                    alt={active.alt ?? `${active.title} — ${active.category}`}
-                    className="absolute inset-0 size-full object-cover"
-                  />
-                ) : (
-                  <DesignVisual piece={active} />
-                )}
-              </div>
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={active.slug}
+                  {...swap}
+                  className="relative w-full shrink-0 overflow-hidden border border-line lg:h-[80vh] lg:w-auto"
+                  style={{ aspectRatio: active.ratio }}
+                >
+                  {active.image ? (
+                    <img
+                      src={active.image}
+                      alt={active.alt ?? `${active.title} — ${active.category}`}
+                      className="absolute inset-0 size-full object-cover"
+                    />
+                  ) : (
+                    <DesignVisual piece={active} />
+                  )}
+                </motion.div>
+              </AnimatePresence>
 
               <div className="flex flex-1 flex-col gap-6 pb-6 lg:pb-0">
-                <div>
-                  <p className="u-eyebrow text-accent">{active.category}</p>
-                  <h2 className="mt-4 font-display text-heading font-medium text-ink">{active.title}</h2>
-                  <p className="mt-4 max-w-[46ch] text-[1rem] leading-[1.7] text-ink-secondary">{active.note}</p>
-                </div>
-
-                <dl className="flex flex-col border-t border-line">
-                  {[
-                    { label: 'Role', value: active.role },
-                    { label: 'Tools', value: active.tools.join(', ') },
-                    { label: 'Year', value: active.year },
-                  ].map((row) => (
-                    <div key={row.label} className="grid grid-cols-[5rem_1fr] gap-4 border-b border-line py-3">
-                      <dt className="u-eyebrow pt-0.5 text-ink-muted">{row.label}</dt>
-                      <dd className="text-[0.875rem] text-ink-secondary">{row.value}</dd>
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.div key={active.slug} {...swap} className="flex flex-col gap-6">
+                    <div>
+                      <p className="u-eyebrow text-accent">{active.category}</p>
+                      <h2 className="mt-4 font-display text-heading font-medium text-ink">{active.title}</h2>
+                      <p className="mt-4 max-w-[46ch] text-[1rem] leading-[1.7] text-ink-secondary">{active.note}</p>
                     </div>
-                  ))}
-                </dl>
+
+                    <dl className="flex flex-col border-t border-line">
+                      {[
+                        { label: 'Role', value: active.role },
+                        { label: 'Tools', value: active.tools.join(', ') },
+                        { label: 'Year', value: active.year },
+                      ]
+                        .filter((row) => row.value)
+                        .map((row) => (
+                          <div key={row.label} className="grid grid-cols-[5rem_1fr] gap-4 border-b border-line py-3">
+                            <dt className="u-eyebrow pt-0.5 text-ink-muted">{row.label}</dt>
+                            <dd className="text-[0.875rem] text-ink-secondary">{row.value}</dd>
+                          </div>
+                        ))}
+                    </dl>
+                  </motion.div>
+                </AnimatePresence>
 
                 <div className="flex items-center gap-4">
                   <button

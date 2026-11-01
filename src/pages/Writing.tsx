@@ -4,6 +4,7 @@ import { useSeo } from '@/hooks/useSeo'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { ArticleCard } from '@/components/writing/ArticleCard'
 import { Reveal, RuleLine } from '@/components/ui/Reveal'
+import { ScrollStatement } from '@/components/ui/ScrollStatement'
 import { MagneticButton } from '@/components/ui/MagneticButton'
 import { cn } from '@/utils/cn'
 
@@ -90,9 +91,9 @@ export default function Writing() {
 
       <section className="u-shell pb-24 md:pb-32">
         <Reveal y={16} className="flex flex-col items-start gap-8 border-t border-line pt-12 md:pt-16">
-          <p className="max-w-[40ch] font-display text-[clamp(1.5rem,3vw,2.4rem)] leading-[1.15] font-medium tracking-[-0.03em] text-ink">
+          <ScrollStatement className="max-w-[40ch] font-display text-[clamp(1.5rem,3vw,2.4rem)] leading-[1.15] font-medium tracking-[-0.03em] text-ink">
             Disagree with something here? That is the most useful email you could send me.
-          </p>
+          </ScrollStatement>
           <MagneticButton to="/contact" size="lg" withArrow>
             Get in touch
           </MagneticButton>

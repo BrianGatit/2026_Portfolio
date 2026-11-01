@@ -11,18 +11,17 @@ const bySlug = new Map(allProjects.map((p) => [p.slug, p]))
 /**
  * The work index is art-directed rather than sorted: this list fixes both the
  * reading order and the span each card claims, so every row of the 12-column
- * mosaic resolves (12 · 8+4 · 6+6 · 8+4 · 6+6).
+ * mosaic resolves (12 · 8+4 · 6+6 · 8+4 · 12).
  */
 const mosaic: [slug: string, span: CardSpan][] = [
   ['atlas-freight-os', 'full'],
   ['corpus-rag', 'wide'],
   ['meridian-design-system', 'tall'],
   ['kilimo-yield', 'half'],
-  ['north-bearing', 'half'],
+  ['munga-design', 'half'],
   ['ledger-lens', 'wide'],
   ['signal-retention', 'tall'],
-  ['mobility-atlas', 'half'],
-  ['sanaa-festival', 'half'],
+  ['mobility-atlas', 'full'],
 ]
 
 /** Projects in curated order, with layout spans applied. */

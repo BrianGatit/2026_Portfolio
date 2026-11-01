@@ -5,6 +5,7 @@ import { disciplineNav, primaryNav, site, socials } from '@/data/site'
 import { socialIcons } from '@/components/ui/Icons'
 import { ArrowLink } from '@/components/ui/ArrowLink'
 import { easeEditorial } from '@/utils/motion'
+import { LogoMark } from '@/components/ui/Logo'
 
 /** Local time in Nairobi — a small signal that a person is behind this. */
 function LocalTime() {
@@ -125,8 +126,9 @@ export function Footer() {
       </div>
 
       <div className="u-shell flex flex-col gap-3 border-t border-line py-6 md:flex-row md:items-center md:justify-between">
-        <p className="u-eyebrow text-ink-faint">
-          © {year} {site.name} — All rights reserved
+        <p className="u-eyebrow flex items-center gap-3 text-ink-faint">
+          <LogoMark className="h-4 w-auto shrink-0" />
+          <span>© {year} {site.name} — All rights reserved</span>
         </p>
         <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
           <LocalTime />

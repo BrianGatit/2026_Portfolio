@@ -5,6 +5,7 @@ import { useSeo } from '@/hooks/useSeo'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { Reveal, RevealGroup, RevealItem } from '@/components/ui/Reveal'
+import { ScrollStatement } from '@/components/ui/ScrollStatement'
 import { Chart } from '@/components/charts/Chart'
 import { Tag } from '@/components/ui/Tag'
 import { ArrowLink } from '@/components/ui/ArrowLink'
@@ -236,9 +237,9 @@ export default function DataScience() {
 
       <section className="u-shell pb-24 md:pb-32">
         <Reveal y={16} className="flex flex-col items-start gap-8 border-t border-line pt-12 md:pt-16">
-          <p className="max-w-[40ch] font-display text-[clamp(1.5rem,3vw,2.4rem)] leading-[1.15] font-medium tracking-[-0.03em] text-ink">
+          <ScrollStatement className="max-w-[40ch] font-display text-[clamp(1.5rem,3vw,2.4rem)] leading-[1.15] font-medium tracking-[-0.03em] text-ink">
             Have data you suspect is telling you something?
-          </p>
+          </ScrollStatement>
           <div className="flex flex-wrap gap-4">
             <MagneticButton to="/contact" size="lg" withArrow>
               Discuss an analysis

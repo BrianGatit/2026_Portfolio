@@ -4,9 +4,10 @@ import type { CardSpan, Project } from '@/types'
 import { cn } from '@/utils/cn'
 import { disciplineLabels } from '@/data/projects'
 import { MediaFrame, ProjectMedia } from '@/components/visual/Media'
+import { RevealMedia } from '@/components/visual/RevealMedia'
 import { TagList } from '@/components/ui/Tag'
 import { ArrowUpRight } from '@/components/ui/Icons'
-import { easeEditorial, fadeUp, inViewEarly } from '@/utils/motion'
+import { fadeUp, inViewEarly } from '@/utils/motion'
 
 interface ProjectCardProps {
   project: Project
@@ -57,14 +58,9 @@ export function ProjectCard({ project, index, span, priority = false, className 
           className={cn(ratioClasses[cardSpan], 'transition-colors duration-700 group-hover:border-line-strong')}
           cursorLabel="View case study"
         >
-          <motion.div
-            className="absolute inset-0"
-            initial={{ scale: 1 }}
-            whileHover={{ scale: 1.045 }}
-            transition={{ duration: 1.1, ease: easeEditorial }}
-          >
+          <RevealMedia>
             <ProjectMedia project={project} priority={priority} />
-          </motion.div>
+          </RevealMedia>
 
           {/* corner metadata, printed onto the frame */}
           <div className="pointer-events-none absolute inset-0 flex flex-col justify-between p-4 md:p-5">

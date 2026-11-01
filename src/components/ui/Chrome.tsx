@@ -5,6 +5,11 @@ export function Grain() {
   return <div className="u-grain" aria-hidden />
 }
 
+/** Slow ambient light behind the top of every page. Pure CSS — see `.u-ambient`. */
+export function Ambient() {
+  return <div className="u-ambient" aria-hidden />
+}
+
 /**
  * Reading progress. Two pixels of accent at the very top of the viewport —
  * the only element on the site that reports on itself.

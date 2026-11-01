@@ -79,14 +79,14 @@ export function runSmoke() {
       pattern: '/design',
       element: <Design />,
       expect: 'Selected pieces',
-      // The real design files, their credits, and descriptive alt text.
+      // The real design files and their descriptive alt text.
       mustInclude: [
-        '/design/building-is-art.jpg',
-        '/design/belonging-still-becoming.jpg',
-        '/design/basketball-sport-magazine.jpg',
-        'Building is art',
-        'Belonging; still becoming',
-        'Canva',
+        '/design/munga/primary-logo.jpg',
+        '/design/munga/construction-grid.jpg',
+        '/design/munga/bottle-range.jpg',
+        '/design/munga/mural.jpg',
+        'The hidden M',
+        '20° = refinement',
       ],
     },
     { path: '/writing', pattern: '/writing', element: <Writing />, expect: 'min read' },

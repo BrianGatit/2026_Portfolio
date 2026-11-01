@@ -23,11 +23,28 @@ export const fadeUp: Variants = {
   visible: { opacity: 1, y: 0, transition: transition.base },
 }
 
+/**
+ * How far masked type starts below its resting place. The masks reach 0.22em
+ * below a line box whose height can be as little as 0.86em, and caps rise
+ * above it, so anything under ~135% would leave the tops of letters showing.
+ */
+export const maskTravel = '140%'
+
 /** Line-by-line editorial reveal: the child slides out of a clipping mask. */
 export const maskLine: Variants = {
-  hidden: { y: '110%' },
+  hidden: { y: maskTravel },
   visible: { y: '0%', transition: { duration: 0.85, ease: easeEditorial } },
 }
+
+/**
+ * Typographic hierarchy. Page titles arrive on load, slowest and with the most
+ * air between lines; section titles arrive on scroll, quicker and tighter, so
+ * they read as subordinate. Supporting copy is never split — it fades up whole.
+ */
+export const typeMotion = {
+  page: { duration: 0.95, stagger: 0.11, delay: 0.1 },
+  section: { duration: 0.75, stagger: 0.075, delay: 0 },
+} as const
 
 export const staggerParent = (stagger = 0.08, delay = 0): Variants => ({
   hidden: {},

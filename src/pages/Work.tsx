@@ -5,6 +5,7 @@ import { useSeo } from '@/hooks/useSeo'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { ProjectGrid } from '@/components/project/ProjectGrid'
 import { Reveal } from '@/components/ui/Reveal'
+import { ScrollStatement } from '@/components/ui/ScrollStatement'
 import { MagneticButton } from '@/components/ui/MagneticButton'
 import { cn } from '@/utils/cn'
 
@@ -94,9 +95,9 @@ export default function Work() {
 
       <section className="u-shell pb-24 md:pb-32">
         <Reveal y={16} className="flex flex-col items-start gap-8 border-t border-line pt-12 md:pt-16">
-          <p className="max-w-[38ch] font-display text-[clamp(1.5rem,3vw,2.4rem)] leading-[1.15] font-medium tracking-[-0.03em] text-ink">
+          <ScrollStatement className="max-w-[38ch] font-display text-[clamp(1.5rem,3vw,2.4rem)] leading-[1.15] font-medium tracking-[-0.03em] text-ink">
             Something here look like the problem you are trying to solve?
-          </p>
+          </ScrollStatement>
           <MagneticButton to="/contact" size="lg" withArrow>
             Let’s work together
           </MagneticButton>

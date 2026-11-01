@@ -2,13 +2,15 @@ import { useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { motion } from 'motion/react'
 import { cn } from '@/utils/cn'
+import { easeEditorial } from '@/utils/motion'
 import { primaryNav, site } from '@/data/site'
 import { useScrolled } from '@/hooks/useUi'
 import { ThemeToggle } from '@/components/ui/ThemeToggle'
+import { LogoMark } from '@/components/ui/Logo'
 import { MagneticButton } from '@/components/ui/MagneticButton'
 import { MobileMenu } from './MobileMenu'
 
-/** The monogram doubles as the home link. */
+/** The logo mark doubles as the home link. */
 function Monogram() {
   return (
     <Link
@@ -16,15 +18,7 @@ function Monogram() {
       className="group flex items-center gap-3"
       aria-label={`${site.name} — home`}
     >
-      <span className="relative grid size-9 place-items-center overflow-hidden border border-line-strong">
-        <span
-          aria-hidden
-          className="absolute inset-0 origin-bottom scale-y-0 bg-accent transition-transform duration-500 ease-[var(--ease-editorial)] group-hover:scale-y-100"
-        />
-        <span className="relative font-display text-[0.8125rem] leading-none font-medium tracking-[0.02em] text-ink transition-colors duration-500 group-hover:text-on-accent">
-          {site.initials}
-        </span>
-      </span>
+      <LogoMark className="h-8 w-auto shrink-0 md:h-9" />
       <span className="hidden flex-col leading-tight sm:flex">
         <span className="font-display text-[0.9375rem] leading-none font-medium tracking-[-0.015em] text-ink">
           {site.name}
@@ -81,13 +75,22 @@ export function Navbar() {
                   {({ isActive }) => (
                     <>
                       {item.label}
-                      <span
-                        aria-hidden
-                        className={cn(
-                          'absolute -bottom-0.5 left-0 h-px w-full origin-left bg-accent transition-transform duration-500 ease-[var(--ease-editorial)]',
-                          isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100',
-                        )}
-                      />
+                      {/* The active rule is one shared element, so it slides
+                          from the old link to the new one on navigation; the
+                          others draw their own rule on hover. */}
+                      {isActive ? (
+                        <motion.span
+                          aria-hidden
+                          layoutId="nav-active-rule"
+                          transition={{ duration: 0.55, ease: easeEditorial }}
+                          className="absolute -bottom-0.5 left-0 h-px w-full bg-accent"
+                        />
+                      ) : (
+                        <span
+                          aria-hidden
+                          className="absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-accent/60 transition-transform duration-500 ease-[var(--ease-editorial)] group-hover:scale-x-100"
+                        />
+                      )}
                     </>
                   )}
                 </NavLink>

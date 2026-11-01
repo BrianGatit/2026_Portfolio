@@ -6,7 +6,9 @@ import { useSeo } from '@/hooks/useSeo'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { Reveal, RevealGroup, RevealItem } from '@/components/ui/Reveal'
+import { ScrollStatement } from '@/components/ui/ScrollStatement'
 import { DesignGallery } from '@/components/design/DesignGallery'
+import { RevealMedia } from '@/components/visual/RevealMedia'
 import { MediaFrame, ProjectMedia } from '@/components/visual/Media'
 import { ArrowLink } from '@/components/ui/ArrowLink'
 import { MagneticButton } from '@/components/ui/MagneticButton'
@@ -14,9 +16,9 @@ import { Tag } from '@/components/ui/Tag'
 import { cn } from '@/utils/cn'
 
 const capabilities = [
-  { label: 'Identity', items: ['Naming & positioning', 'Wordmark & marque', 'Type & colour systems', 'Guidelines'] },
-  { label: 'Editorial', items: ['Report & annual design', 'Type specimens', 'Cartography & plates', 'Print production'] },
-  { label: 'Campaign', items: ['Poster systems', 'Social kits', 'Wayfinding', 'Apparel & merch'] },
+  { label: 'Identity', items: ['Logo & monogram', 'Construction grids', 'Colour systems', 'Wordmark lockups'] },
+  { label: 'Applications', items: ['Apparel & embroidery', 'Merchandise', 'Environmental graphics', 'Brand patterns'] },
+  { label: 'Campaign', items: ['Brand storytelling', 'Social series', 'Posters', 'Art direction'] },
   { label: 'Product', items: ['Design systems', 'Token pipelines', 'Data-visualisation language', 'Figma libraries'] },
 ]
 
@@ -31,7 +33,7 @@ export default function Design() {
   useSeo({
     title: 'Design',
     description:
-      'Brand identity, editorial design, posters, logos, stationery and apparel — visual systems built to survive contact with a real product.',
+      'Brand identity, logos, apparel, merchandise and environmental graphics — including the Munga Design identity, built on two angles and the space between them.',
     path: '/design',
   })
 
@@ -42,7 +44,7 @@ export default function Design() {
         title={['Systems you can', 'see — and build', 'against']}
         lead="Identity, editorial and campaign work. I design the rule, then usually write the code that applies it — which is why these systems tend to still be intact a year later."
         meta={[
-          { label: 'Practice', value: 'Identity · Editorial · Campaign' },
+          { label: 'Practice', value: 'Identity · Applications · Campaign' },
           { label: 'Tools', value: 'Figma · Illustrator · InDesign' },
           { label: 'Output', value: 'Print · Screen · Tokens' },
           { label: 'Pieces shown', value: `${designPieces.length} selected` },
@@ -54,7 +56,7 @@ export default function Design() {
         <SectionHeading
           index="01"
           label="Case studies"
-          title="Two identity systems, in full"
+          title="One identity system, in full"
           lead="Where design work has an argument behind it, it gets a case study rather than a thumbnail."
         />
 
@@ -70,9 +72,9 @@ export default function Design() {
             >
               <Link to={`/work/${project.slug}`} className="group block lg:col-span-7">
                 <MediaFrame className="aspect-[4/3] sm:aspect-[16/10]" cursorLabel="View case study">
-                  <div className="absolute inset-0 transition-transform duration-[1100ms] ease-[var(--ease-editorial)] group-hover:scale-[1.04]">
+                  <RevealMedia delay={0.15}>
                     <ProjectMedia project={project} />
-                  </div>
+                  </RevealMedia>
                 </MediaFrame>
               </Link>
 
@@ -127,8 +129,8 @@ export default function Design() {
         <SectionHeading
           index="02"
           label="Selected pieces"
-          title="Marks, plates and artefacts"
-          lead="Logos, posters, editorial spreads, stationery and apparel. Click any piece for the detail."
+          title="Marks, objects and surfaces"
+          lead="The Munga Design identity, piece by piece — logo, construction, apparel, merchandise, mural and pattern. Click any piece for the detail."
         />
 
         <Reveal y={12} className="mt-12 md:mt-16">
@@ -197,9 +199,9 @@ export default function Design() {
 
       <section className="u-shell pb-24 md:pb-32">
         <Reveal y={16} className="flex flex-col items-start gap-8 border-t border-line pt-12 md:pt-16">
-          <p className="max-w-[40ch] font-display text-[clamp(1.5rem,3vw,2.4rem)] leading-[1.15] font-medium tracking-[-0.03em] text-ink">
+          <ScrollStatement className="max-w-[40ch] font-display text-[clamp(1.5rem,3vw,2.4rem)] leading-[1.15] font-medium tracking-[-0.03em] text-ink">
             Need an identity that will still hold together inside a product?
-          </p>
+          </ScrollStatement>
           <div className="flex flex-wrap gap-4">
             <MagneticButton to="/contact" size="lg" withArrow>
               Start a design project

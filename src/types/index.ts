@@ -157,7 +157,8 @@ export interface CaseStudyContent {
   challenges: NamedBody[]
   outcome: string
   analysis?: Analysis
-  gallery?: { caption: string; ratio?: string }[]
+  /** Real figures when `image` is set; a captioned placeholder otherwise. */
+  gallery?: { caption: string; ratio?: string; image?: string; alt?: string }[]
   next?: string[]
 }
 
@@ -189,12 +190,15 @@ export interface Project {
 
 export type DesignCategory =
   | 'Brand identity'
+  | 'Logo'
+  | 'Apparel'
+  | 'Merchandise'
+  | 'Social'
+  | 'Environmental'
+  | 'Pattern'
   | 'Poster'
   | 'Editorial'
-  | 'Social'
-  | 'Logo'
   | 'Stationery'
-  | 'Apparel'
   | 'Packaging'
 
 export interface DesignPiece {
