@@ -59,14 +59,15 @@ export function runSmoke() {
       path: '/',
       pattern: '/',
       element: <Home />,
-      expect: 'Creative Designer',
-      // The hero's roles animate, so assert the accessible phrase is intact
-      // and that every role is in the DOM (the invisible size spacers).
+      expect: 'CREATIVE DEVELOPER',
+      // The hero headline is split into letters and its roles rotate, so
+      // assert the one accessible sentence is intact, every role reserves its
+      // slot, and words cannot break mid-letter.
       mustInclude: [
-        'Software Engineer, Data Scientist and Creative Designer',
-        'Software Engineer',
-        'Data Scientist',
-        'Creative Designer',
+        'Brian Mungai — Software Engineer, Creative Developer, Data Scientist and Graphic Designer',
+        'DATA SCIENTIST',
+        'GRAPHIC DESIGNER',
+        'u-signature-rule',
         'whitespace-nowrap',
       ],
     },
@@ -79,14 +80,17 @@ export function runSmoke() {
       pattern: '/design',
       element: <Design />,
       expect: 'Selected pieces',
-      // The real design files, their credits, and descriptive alt text.
+      // The real design files and their descriptive alt text, the separated
+      // layers of a flat file, and a live recreation's own type.
       mustInclude: [
-        '/design/building-is-art.jpg',
-        '/design/belonging-still-becoming.jpg',
-        '/design/basketball-sport-magazine.jpg',
-        'Building is art',
-        'Belonging; still becoming',
-        'Canva',
+        '/design/munga/brand-board.jpg',
+        '/design/clients/kachiliba-emblem.jpg',
+        '/design/munga/bottle-range.jpg',
+        'dm-cut-wipe',
+        'Where refinement meets risk.',
+        '/design/munga/mural.jpg',
+        'The hidden M',
+        '20° = refinement',
       ],
     },
     { path: '/writing', pattern: '/writing', element: <Writing />, expect: 'min read' },

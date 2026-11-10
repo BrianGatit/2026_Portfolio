@@ -5,7 +5,9 @@ import { useSeo } from '@/hooks/useSeo'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { Reveal, RevealGroup, RevealItem } from '@/components/ui/Reveal'
+import { ScrollStatement } from '@/components/ui/ScrollStatement'
 import { MediaFrame, ProjectMedia } from '@/components/visual/Media'
+import { RevealMedia } from '@/components/visual/RevealMedia'
 import { Tag } from '@/components/ui/Tag'
 import { ArrowLink } from '@/components/ui/ArrowLink'
 import { MagneticButton } from '@/components/ui/MagneticButton'
@@ -59,9 +61,9 @@ function EngineeringEntry({ project, index }: { project: Project; index: number 
       <div className="lg:col-span-5">
         <Link to={`/work/${project.slug}`} className="group block">
           <MediaFrame className="aspect-[4/3]" cursorLabel="View case study">
-            <div className="absolute inset-0 transition-transform duration-[1100ms] ease-[var(--ease-editorial)] group-hover:scale-[1.04]">
+            <RevealMedia>
               <ProjectMedia project={project} />
-            </div>
+            </RevealMedia>
           </MediaFrame>
         </Link>
 
@@ -229,9 +231,9 @@ export default function Engineering() {
 
       <section className="u-shell pb-24 md:pb-32">
         <Reveal y={16} className="flex flex-col items-start gap-8 border-t border-line pt-12 md:pt-16">
-          <p className="max-w-[40ch] font-display text-[clamp(1.5rem,3vw,2.4rem)] leading-[1.15] font-medium tracking-[-0.03em] text-ink">
+          <ScrollStatement className="max-w-[40ch] font-display text-[clamp(1.5rem,3vw,2.4rem)] leading-[1.15] font-medium tracking-[-0.03em] text-ink">
             Need a product built, or an existing one made maintainable?
-          </p>
+          </ScrollStatement>
           <div className="flex flex-wrap gap-4">
             <MagneticButton to="/contact" size="lg" withArrow>
               Let’s talk architecture

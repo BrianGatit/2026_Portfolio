@@ -38,6 +38,18 @@
   --series-4: #eda100;
 
   --grain-opacity: 0.035;
+  /* Ambient light may only lift the paper or tint it below the point where
+     accent text drops under 4.5:1 — 2.2% is the ceiling (4.53:1 at peak). */
+  --ambient-warm: rgb(201 53 15 / 0.022);
+  --ambient-shade: var(--surface);
+  /* cinematic hero heading: logo orange glow, amber light sweep */
+  --cinema-sweep: #fdb31b;
+  --cinema-shadow: rgb(17 17 19 / 0.14);
+  --cinema-light: #fd6f1d;
+  --signature-shadow: rgb(17 17 19 / 0.12);
+  --signature-edge-live: rgb(201 53 15 / 0.32);
+  /* the headline: ink on paper, warm ivory on the dark surface */
+  --signature-ink: var(--ink);
   color-scheme: light;
 }
 
@@ -67,6 +79,14 @@
   --series-4: #c98500;
 
   --grain-opacity: 0.05;
+  --ambient-warm: rgb(255 90 46 / 0.07);
+  --ambient-shade: var(--page-deep);
+  --cinema-sweep: #ffe1b5;
+  --cinema-shadow: rgb(0 0 0 / 0.7);
+  --cinema-light: #ff9a52;
+  --signature-shadow: rgb(0 0 0 / 0.55);
+  --signature-edge-live: rgb(255 90 46 / 0.5);
+  --signature-ink: #f3ead7;
   color-scheme: dark;
 }
 
@@ -308,12 +328,261 @@
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
+  /* ---- ambient light --------------------------------------------- */
+  /* Warm light drifting slowly across the top of the sheet, behind the
+     opening of every page. Gradients are painted once; only transform
+     animates, so it stays on the compositor. It fades out before the
+     hairline grids below, whose solid cells would otherwise show as patches.
+     The gradients ease out rather than fall off linearly: at this low a
+     contrast a linear ramp reads as rings at its centre and edge. */
+  .u-ambient {
+    position: absolute;
+    inset: 0 0 auto;
+    height: min(115vh, 1150px);
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+    -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent);
+    mask-image: linear-gradient(to bottom, #000 45%, transparent);
+  }
+  .u-ambient::before,
+  .u-ambient::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    will-change: transform;
+    animation: u-ambient 34s ease-in-out infinite alternate;
+  }
+  /* the warm light, upper right */
+  .u-ambient::before {
+    top: -30%;
+    right: -20%;
+    width: max(70vw, 620px);
+    aspect-ratio: 1;
+    background: radial-gradient(
+      closest-side,
+      var(--ambient-warm) 0%,
+      color-mix(in srgb, var(--ambient-warm) 92%, transparent) 18%,
+      color-mix(in srgb, var(--ambient-warm) 72%, transparent) 36%,
+      color-mix(in srgb, var(--ambient-warm) 46%, transparent) 54%,
+      color-mix(in srgb, var(--ambient-warm) 22%, transparent) 72%,
+      color-mix(in srgb, var(--ambient-warm) 8%, transparent) 86%,
+      transparent 100%
+    );
+  }
+  /* the second light, lower left: a paper highlight in light mode, a deeper
+     shade in dark — either way it raises text contrast rather than lowering it */
+  .u-ambient::after {
+    bottom: -20%;
+    left: -25%;
+    width: max(60vw, 520px);
+    aspect-ratio: 1;
+    background: radial-gradient(
+      closest-side,
+      var(--ambient-shade) 0%,
+      color-mix(in srgb, var(--ambient-shade) 92%, transparent) 18%,
+      color-mix(in srgb, var(--ambient-shade) 72%, transparent) 36%,
+      color-mix(in srgb, var(--ambient-shade) 46%, transparent) 54%,
+      color-mix(in srgb, var(--ambient-shade) 22%, transparent) 72%,
+      color-mix(in srgb, var(--ambient-shade) 8%, transparent) 86%,
+      transparent 100%
+    );
+    animation-duration: 46s;
+    animation-direction: alternate-reverse;
+  }
+  @keyframes u-ambient {
+    from {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    to {
+      transform: translate3d(-9vw, 7vh, 0) scale(1.12);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .u-ambient::before,
+    .u-ambient::after {
+      animation: none;
+    }
+  }
+
+  /* ---- cinematic heading ----------------------------------------- */
+  /* The light: a copy of the letters filled with a narrow highlight band,
+     carried across by background-position. */
+  .u-cinema-sweep {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    color: transparent;
+    background-image: linear-gradient(100deg, transparent 40%, var(--cinema-sweep) 50%, transparent 60%);
+    background-size: 250% 100%;
+    background-repeat: no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+  /* ---- signature heading ---------------------------------------- */
+  /* Two lines on one left edge. Line one is set at full size and tight, so
+     it runs a little wider; line two is 97% and a touch more open. The rule sits on
+     the axis between them and runs just past line one's last letter. */
+  .u-signature {
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 0.84;
+    color: var(--signature-ink);
+  }
+  .u-signature-one {
+    letter-spacing: -0.042em;
+  }
+  .u-signature-two {
+    font-size: 0.97em;
+    letter-spacing: -0.014em;
+  }
+  .u-signature-rule {
+    width: calc(100% + 0.32em);
+    height: max(1px, 0.011em);
+    margin-block: 0.104em 0.126em;
+    background: var(--accent);
+  }
+  /* The orange square that ends the axis, past the words. */
+  .u-signature-rule {
+    position: relative;
+  }
+  .u-signature-rule::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 0.055em;
+    height: 0.055em;
+    translate: 0 -50%;
+    background: var(--accent);
+  }
+  /* Hairline corner marks — registration marks framing the block. */
+  .u-signature-mark {
+    position: absolute;
+    width: 0.16em;
+    height: 0.16em;
+    border: 0 solid var(--ink-faint);
+    pointer-events: none;
+  }
+  .u-signature-mark--start {
+    top: -0.1em;
+    left: -0.2em;
+    border-width: max(1px, 0.006em) 0 0 max(1px, 0.006em);
+  }
+  .u-signature-mark--end {
+    bottom: -0.06em;
+    right: -0.2em;
+    border-width: 0 max(1px, 0.006em) max(1px, 0.006em) 0;
+  }
+
+  /* One letter: the solid face plus, while it assembles, its outline bands. */
+  .u-glyph {
+    position: relative;
+    display: inline-block;
+  }
+  /* Lit by the pointer (--lx/--ly, −1…1): the shadow falls away from it and a
+     warm edge catches the near side. At rest the shadow sits just below. */
+  .u-glyph-solid {
+    display: inline-block;
+    text-shadow:
+      calc(var(--hl-x, 0em) + var(--lx, 0) * 0.012em) calc(var(--ly, 0) * 0.01em) 0 var(--signature-edge-live),
+      calc(var(--lx, 0) * -0.03em) calc(0.035em + var(--ly, 0) * -0.02em) 0.07em var(--signature-shadow);
+  }
+  /* Each line's first letter keeps a fine warm edge even at rest. */
+  .u-glyph--lead {
+    --hl-x: max(-1.5px, -0.008em);
+  }
+  /* A band: an outline copy of the letter, cut to one horizontal slice. */
+  .u-glyph-band {
+    position: absolute;
+    inset: 0;
+    color: transparent;
+    -webkit-text-stroke: max(1px, 0.007em) var(--signature-ink);
+    pointer-events: none;
+    user-select: none;
+  }
+  /* Decorative copies draw their letter from `data-char`, so they are never
+     part of the text: selecting or copying the heading yields only the words. */
+  .u-glyph-band::before,
+  .u-glyph-copy::before {
+    content: attr(data-char);
+  }
+  .u-glyph-band--accent {
+    -webkit-text-stroke-color: var(--accent);
+  }
+
+  /* The roles' light runs amber into orange — the two halves of the mark. */
+  .u-cinema-sweep--warm {
+    background-image: linear-gradient(
+      100deg,
+      transparent 36%,
+      var(--cinema-sweep) 45%,
+      var(--accent) 55%,
+      transparent 64%
+    );
+  }
+  /* A thin warm-orange line of light — a sliver, not a glow. */
+  .u-cinema-sweep--thin {
+    background-image: linear-gradient(
+      100deg,
+      transparent 47%,
+      var(--cinema-light) 50%,
+      transparent 53%
+    );
+  }
+  /* The floating forms' own slow drift, under the pointer parallax. */
+  .u-shard {
+    animation: u-shard 13s ease-in-out infinite alternate;
+  }
+  @keyframes u-shard {
+    to {
+      transform: translate3d(0, -12px, 0) rotate(5deg);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .u-shard {
+      animation: none;
+    }
+  }
+
+  /* The facet field fades out at its edges rather than ending on a line. */
+  .u-facets {
+    -webkit-mask-image: radial-gradient(ellipse 60% 62% at 55% 50%, #000 30%, transparent 78%);
+    mask-image: radial-gradient(ellipse 60% 62% at 55% 50%, #000 30%, transparent 78%);
+  }
+
+  /* ---- logo mark ------------------------------------------------- */
+  /* On hover the amber stroke rises a touch, as if the fold had just been
+     made. Units are the mark's own (584 wide), so it scales with the logo. */
+  .u-logo-right {
+    transition: transform 0.6s var(--ease-editorial);
+  }
+  .group:hover .u-logo-right,
+  .group:focus-visible .u-logo-right {
+    transform: translateY(-34px);
+  }
+
   /* ---- text-clip reveal masks ------------------------------------ */
+  /* Masks for type that rises into place. They clip vertically only, so a
+     glyph overhanging its advance (a y's tail, tight tracking) is never cut
+     at the sides, and they reach past the line box — the display sizes run
+     line-heights below 1, so caps and descenders overflow it — then give the
+     space back with negative margins, so the masked text sets exactly as
+     plain text would. Travel must clear the bottom padding: see `motion.ts`. */
+  .u-clip,
+  .u-mask {
+    overflow-x: visible;
+    overflow-y: clip;
+    padding-block: 0.14em 0.22em;
+    margin-block: -0.14em -0.22em;
+  }
   .u-clip {
     display: block;
-    overflow: hidden;
-    padding-bottom: 0.08em;
-    margin-bottom: -0.08em;
+  }
+  /* One word: inline-block, so words still wrap — and balance — at the spaces
+     between them exactly as an unsplit heading would. */
+  .u-mask {
+    display: inline-block;
   }
 
   /* ---- marquee --------------------------------------------------- */

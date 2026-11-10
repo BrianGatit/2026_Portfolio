@@ -1,14 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <rect width="64" height="64" rx="6" fill="#0a0a0b" />
-  <!-- the plot: data rising through the mark -->
-  <path
-    d="M12 46 C21 46 22 30 32 30 C42 30 43 18 52 18"
-    fill="none"
-    stroke="#ff5a2e"
-    stroke-width="4.5"
-    stroke-linecap="round"
-  />
-  <!-- baseline + the point it lands on -->
-  <path d="M12 52h40" stroke="#f4f2ec" stroke-opacity="0.35" stroke-width="2.5" stroke-linecap="round" />
-  <circle cx="52" cy="18" r="5" fill="#ff5a2e" stroke="#0a0a0b" stroke-width="2.5" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="208 192.5 624 624" width="64" height="64">
+  <!-- the M mark: amber stroke behind, orange stroke folded over it -->
+  <path fill="#fdb31b" d="M521 349 L624 236 Q631 228 642 228 H802 Q812 228 812 238 V661 A120 120 0 0 1 692 781 H523 C590 750 635 690 635 610 V492 Z"/>
+  <path fill="#fd6f1d" d="M240 228 H395 Q407 228 415 237 L628 463 Q650 486 628 510 L531 611 Q520 623 509 611 L403 500 V772 Q403 780 395 780 H353 A125 125 0 0 1 228 655 V240 Q228 228 240 228 Z"/>
 </svg>
