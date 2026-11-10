@@ -10,7 +10,7 @@ import { ArrowLink } from '@/components/ui/ArrowLink'
 import { MagneticButton } from '@/components/ui/MagneticButton'
 import { Marquee } from '@/components/ui/Marquee'
 import { Reveal, RevealGroup, RevealItem, RuleLine } from '@/components/ui/Reveal'
-import { RoleCycler } from '@/components/ui/RoleCycler'
+import { HeroHeading } from '@/components/ui/HeroHeading'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { ProjectGrid } from '@/components/project/ProjectGrid'
 import { ArticleCard } from '@/components/writing/ArticleCard'
@@ -18,15 +18,12 @@ import { HeroVisual } from '@/components/visual/HeroVisual'
 import { Portrait } from '@/components/visual/Portrait'
 import { ProjectVisual } from '@/components/visual/ProjectVisual'
 import { ArrowDown } from '@/components/ui/Icons'
-import { easeEditorial, maskLine, staggerParent } from '@/utils/motion'
+import { easeEditorial } from '@/utils/motion'
 import { usePageParallax } from '@/hooks/useParallax'
 
 /* ------------------------------------------------------------------ *\
    Hero
 \* ------------------------------------------------------------------ */
-
-/** The rotation order in the hero headline. */
-const heroRoles = ['Software Engineer', 'Data Scientist', 'Creative Designer'] as const
 
 function Hero() {
   // The photograph lags the headline slightly as the page scrolls away.
@@ -56,32 +53,15 @@ function Hero() {
         </p>
       </motion.div>
 
-      {/* The headline: a fixed name, then the role that rotates.
-          The heading's real text is the full phrase, supplied once and
-          visually hidden, so screen readers and crawlers get a stable
-          sentence while the visible layer animates. */}
-      <h1 id="hero-heading" className="mt-10 md:mt-14">
-        <span className="sr-only">
-          {site.name} — Software Engineer, Data Scientist and Creative Designer
-        </span>
-
-        <motion.span
-          aria-hidden
-          className="block font-display text-mega text-ink"
-          variants={staggerParent(0.1, 0.2)}
-          initial="hidden"
-          animate="visible"
-        >
-          <span className="u-clip">
-            <motion.span variants={maskLine} className="block">
-              {site.name}
-              <span className="text-accent">.</span>
-            </motion.span>
-          </span>
-        </motion.span>
-
-        <RoleCycler roles={heroRoles} className="mt-6 md:mt-9" />
-      </h1>
+      {/* The headline — name, a monumental profession and the roles that
+          take turns beneath it, in a low-poly atmosphere. */}
+      <HeroHeading
+        name="Brian Mungai"
+        headline="SOFTWARE ENGINEER"
+        roles={['CREATIVE DEVELOPER', 'DATA SCIENTIST', 'GRAPHIC DESIGNER']}
+        delay={0.2}
+        className="mt-10 md:mt-14"
+      />
 
       {/* lead + portrait */}
       <div className="mt-12 grid grid-cols-1 gap-12 md:mt-16 lg:grid-cols-12 lg:gap-16">

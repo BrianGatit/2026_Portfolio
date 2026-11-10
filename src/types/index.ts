@@ -220,6 +220,61 @@ export interface DesignPiece {
    */
   alt?: string
   palette?: string[]
+  /** How the piece is presented in motion. Defaults to a product presentation. */
+  motion?: DesignMotion
+}
+
+/** A point on a design, in percent of its width (x) and height (y). */
+export interface DesignPoint {
+  x: number
+  y: number
+}
+
+/**
+ * A motion treatment for a flat design file. None of these pretend the image
+ * has layers: each one moves a camera over the artwork, reveals it along its
+ * own structure (a grid, reading bands, a circle), or draws an annotation
+ * layer on top of it.
+ */
+export type DesignMotion =
+  /** A circular iris opens from `origin`; a drawn ring settles on the emblem's circle; light crosses it. */
+  | { kind: 'iris'; origin: DesignPoint; ring: DesignPoint & { r: number } }
+  /** A presentation board split along its own grid: panels assemble, then each takes the focus in turn. */
+  | { kind: 'board'; cols: number; rows: number }
+  /** A dark photograph lit by a moving pool of light. */
+  | { kind: 'spotlight'; path: DesignPoint[] }
+  /** A cinematic letterbox opening, a slow push-in and a passing highlight. */
+  | { kind: 'product' }
+  /** A slow camera move across a wide surface. */
+  | { kind: 'pan'; mode: 'track' | 'drift' | 'breathe' | 'push' }
+  /** Revealed in reading order, band by band along its own layout, on a loop. */
+  | { kind: 'sequence'; axis: 'x' | 'y'; cuts: number[] }
+  /**
+   * The file cut into its real elements — panels, lines of type, tiles,
+   * icons, a seal's ring and medallion — each animating on its own. The
+   * regions tile all of the content, so at rest the frame is the original.
+   */
+  | { kind: 'layers'; size: [number, number]; base: string; layers: DesignLayer[] }
+  /**
+   * A type-and-geometry design rebuilt as live vector and HTML from the brand
+   * mark and the design's exact text, so every letter, line and shape moves.
+   */
+  | { kind: 'live'; design: LiveDesign }
+
+export type LiveDesign = 'primary-logo' | 'convergence' | 'construction' | 'seen-it'
+
+/** One element of a flat file, as a region of it, in the file's own pixels. */
+export interface DesignLayer {
+  shape:
+    | { rect: [x: number, y: number, w: number, h: number] }
+    | { circle: [cx: number, cy: number, r: number] }
+    | { ring: [cx: number, cy: number, inner: number, outer: number] }
+  /** How it arrives: moved inside its own mask, cut in, or turned into place. */
+  enter: 'rise' | 'drop' | 'from-left' | 'from-right' | 'wipe-right' | 'wipe-down' | 'unfold' | 'pop' | 'spin' | 'fade'
+  /** Seconds after the piece starts. */
+  at: number
+  /** What it does afterwards — every loop starts and ends at rest. */
+  loop?: 'float' | 'sway' | 'breathe' | 'spin' | 'glow' | 'pulse' | 'parallax'
 }
 
 /* ------------------------------------------------------------------ *\

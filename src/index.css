@@ -42,6 +42,14 @@
      accent text drops under 4.5:1 — 2.2% is the ceiling (4.53:1 at peak). */
   --ambient-warm: rgb(201 53 15 / 0.022);
   --ambient-shade: var(--surface);
+  /* cinematic hero heading: logo orange glow, amber light sweep */
+  --cinema-sweep: #fdb31b;
+  --cinema-shadow: rgb(17 17 19 / 0.14);
+  --cinema-light: #fd6f1d;
+  --signature-shadow: rgb(17 17 19 / 0.12);
+  --signature-edge-live: rgb(201 53 15 / 0.32);
+  /* the headline: ink on paper, warm ivory on the dark surface */
+  --signature-ink: var(--ink);
   color-scheme: light;
 }
 
@@ -73,6 +81,12 @@
   --grain-opacity: 0.05;
   --ambient-warm: rgb(255 90 46 / 0.07);
   --ambient-shade: var(--page-deep);
+  --cinema-sweep: #ffe1b5;
+  --cinema-shadow: rgb(0 0 0 / 0.7);
+  --cinema-light: #ff9a52;
+  --signature-shadow: rgb(0 0 0 / 0.55);
+  --signature-edge-live: rgb(255 90 46 / 0.5);
+  --signature-ink: #f3ead7;
   color-scheme: dark;
 }
 
@@ -389,6 +403,152 @@
     .u-ambient::after {
       animation: none;
     }
+  }
+
+  /* ---- cinematic heading ----------------------------------------- */
+  /* The light: a copy of the letters filled with a narrow highlight band,
+     carried across by background-position. */
+  .u-cinema-sweep {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    color: transparent;
+    background-image: linear-gradient(100deg, transparent 40%, var(--cinema-sweep) 50%, transparent 60%);
+    background-size: 250% 100%;
+    background-repeat: no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+  /* ---- signature heading ---------------------------------------- */
+  /* Two lines on one left edge. Line one is set at full size and tight, so
+     it runs a little wider; line two is 97% and a touch more open. The rule sits on
+     the axis between them and runs just past line one's last letter. */
+  .u-signature {
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 0.84;
+    color: var(--signature-ink);
+  }
+  .u-signature-one {
+    letter-spacing: -0.042em;
+  }
+  .u-signature-two {
+    font-size: 0.97em;
+    letter-spacing: -0.014em;
+  }
+  .u-signature-rule {
+    width: calc(100% + 0.32em);
+    height: max(1px, 0.011em);
+    margin-block: 0.104em 0.126em;
+    background: var(--accent);
+  }
+  /* The orange square that ends the axis, past the words. */
+  .u-signature-rule {
+    position: relative;
+  }
+  .u-signature-rule::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 0.055em;
+    height: 0.055em;
+    translate: 0 -50%;
+    background: var(--accent);
+  }
+  /* Hairline corner marks — registration marks framing the block. */
+  .u-signature-mark {
+    position: absolute;
+    width: 0.16em;
+    height: 0.16em;
+    border: 0 solid var(--ink-faint);
+    pointer-events: none;
+  }
+  .u-signature-mark--start {
+    top: -0.1em;
+    left: -0.2em;
+    border-width: max(1px, 0.006em) 0 0 max(1px, 0.006em);
+  }
+  .u-signature-mark--end {
+    bottom: -0.06em;
+    right: -0.2em;
+    border-width: 0 max(1px, 0.006em) max(1px, 0.006em) 0;
+  }
+
+  /* One letter: the solid face plus, while it assembles, its outline bands. */
+  .u-glyph {
+    position: relative;
+    display: inline-block;
+  }
+  /* Lit by the pointer (--lx/--ly, −1…1): the shadow falls away from it and a
+     warm edge catches the near side. At rest the shadow sits just below. */
+  .u-glyph-solid {
+    display: inline-block;
+    text-shadow:
+      calc(var(--hl-x, 0em) + var(--lx, 0) * 0.012em) calc(var(--ly, 0) * 0.01em) 0 var(--signature-edge-live),
+      calc(var(--lx, 0) * -0.03em) calc(0.035em + var(--ly, 0) * -0.02em) 0.07em var(--signature-shadow);
+  }
+  /* Each line's first letter keeps a fine warm edge even at rest. */
+  .u-glyph--lead {
+    --hl-x: max(-1.5px, -0.008em);
+  }
+  /* A band: an outline copy of the letter, cut to one horizontal slice. */
+  .u-glyph-band {
+    position: absolute;
+    inset: 0;
+    color: transparent;
+    -webkit-text-stroke: max(1px, 0.007em) var(--signature-ink);
+    pointer-events: none;
+    user-select: none;
+  }
+  /* Decorative copies draw their letter from `data-char`, so they are never
+     part of the text: selecting or copying the heading yields only the words. */
+  .u-glyph-band::before,
+  .u-glyph-copy::before {
+    content: attr(data-char);
+  }
+  .u-glyph-band--accent {
+    -webkit-text-stroke-color: var(--accent);
+  }
+
+  /* The roles' light runs amber into orange — the two halves of the mark. */
+  .u-cinema-sweep--warm {
+    background-image: linear-gradient(
+      100deg,
+      transparent 36%,
+      var(--cinema-sweep) 45%,
+      var(--accent) 55%,
+      transparent 64%
+    );
+  }
+  /* A thin warm-orange line of light — a sliver, not a glow. */
+  .u-cinema-sweep--thin {
+    background-image: linear-gradient(
+      100deg,
+      transparent 47%,
+      var(--cinema-light) 50%,
+      transparent 53%
+    );
+  }
+  /* The floating forms' own slow drift, under the pointer parallax. */
+  .u-shard {
+    animation: u-shard 13s ease-in-out infinite alternate;
+  }
+  @keyframes u-shard {
+    to {
+      transform: translate3d(0, -12px, 0) rotate(5deg);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .u-shard {
+      animation: none;
+    }
+  }
+
+  /* The facet field fades out at its edges rather than ending on a line. */
+  .u-facets {
+    -webkit-mask-image: radial-gradient(ellipse 60% 62% at 55% 50%, #000 30%, transparent 78%);
+    mask-image: radial-gradient(ellipse 60% 62% at 55% 50%, #000 30%, transparent 78%);
   }
 
   /* ---- logo mark ------------------------------------------------- */

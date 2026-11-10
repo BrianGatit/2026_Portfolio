@@ -130,7 +130,7 @@ export default function Design() {
           index="02"
           label="Selected pieces"
           title="Marks, objects and surfaces"
-          lead="The Munga Design identity, piece by piece — logo, construction, apparel, merchandise, mural and pattern. Click any piece for the detail."
+          lead="The Munga Design identity and client work, piece by piece — each one in its own motion, chosen from how the artwork is built. Select any piece for the full presentation."
         />
 
         <Reveal y={12} className="mt-12 md:mt-16">
